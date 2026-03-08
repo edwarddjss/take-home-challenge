@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec80",
+                        "background-light": "#f6f8f7",
+                        "background-dark": "#102219",
+                        "charcoal": "#1a1a1a",
+                        "pastel-blue": "#e0f2fe",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<title>Deck Preview - JavaScript Closures</title>
+</head>
+<body class="bg-pastel-blue font-display text-charcoal">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden p-4 md:p-8">
+<div class="layout-container flex h-full grow flex-col max-w-4xl mx-auto w-full">
+<!-- Navigation -->
+<header class="flex items-center justify-between border-2 border-charcoal bg-white rounded-xl px-6 py-4 mb-8 shadow-[4px_4px_0px_0px_rgba(26,26,26,1)]">
+<div class="flex items-center gap-3">
+<div class="size-8 bg-primary border-2 border-charcoal flex items-center justify-center rounded-lg">
+<span class="material-symbols-outlined font-bold">layers</span>
+</div>
+<h2 class="text-charcoal text-xl font-bold tracking-tight">Deck</h2>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center justify-center rounded-full h-10 w-10 border-2 border-charcoal bg-white hover:bg-slate-50 transition-colors">
+<span class="material-symbols-outlined text-charcoal">more_vert</span>
+</button>
+<button class="flex items-center justify-center rounded-full h-10 w-10 border-2 border-charcoal bg-white hover:bg-slate-50 transition-colors">
+<span class="material-symbols-outlined text-charcoal">share</span>
+</button>
+</div>
+</header>
+<!-- Hero Section -->
+<div class="flex flex-col gap-6 mb-10">
+<div class="flex flex-col gap-2">
+<h1 class="text-charcoal text-5xl md:text-6xl font-black tracking-tight">JavaScript Closures</h1>
+<div class="flex items-center gap-2">
+<span class="bg-primary/20 border border-charcoal/20 px-3 py-1 rounded-full text-sm font-bold text-charcoal">5 cards</span>
+<span class="text-charcoal/60 text-lg font-medium">Master the fundamentals of JS scope</span>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="flex flex-wrap gap-4 mt-2">
+<button class="flex-1 md:flex-none px-8 py-4 bg-primary border-2 border-charcoal rounded-full text-charcoal font-bold text-lg shadow-[4px_4px_0px_0px_rgba(26,26,26,1)] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_rgba(26,26,26,1)] transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">play_arrow</span>
+                        Start studying
+                    </button>
+<button class="flex-1 md:flex-none px-8 py-4 bg-white border-2 border-charcoal rounded-full text-charcoal font-bold text-lg shadow-[4px_4px_0px_0px_rgba(26,26,26,1)] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_rgba(26,26,26,1)] transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">refresh</span>
+                        Regenerate deck
+                    </button>
+</div>
+</div>
+<!-- Card List -->
+<div class="flex flex-col gap-4">
+<!-- Card 1 -->
+<div class="flex items-center gap-4 bg-white border-2 border-charcoal p-5 rounded-xl hover:bg-slate-50 cursor-pointer transition-colors shadow-[2px_2px_0px_0px_rgba(26,26,26,1)]">
+<div class="bg-primary/20 border-2 border-charcoal flex items-center justify-center rounded-lg shrink-0 size-12">
+<span class="material-symbols-outlined text-charcoal">quiz</span>
+</div>
+<div class="flex flex-col flex-1">
+<p class="text-charcoal text-lg font-bold leading-tight">What is a lexical environment?</p>
+<p class="text-charcoal/50 text-sm font-medium">Card 1 • Fundamental Concept</p>
+</div>
+<div class="shrink-0 text-charcoal">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="flex items-center gap-4 bg-white border-2 border-charcoal p-5 rounded-xl hover:bg-slate-50 cursor-pointer transition-colors shadow-[2px_2px_0px_0px_rgba(26,26,26,1)]">
+<div class="bg-primary/20 border-2 border-charcoal flex items-center justify-center rounded-lg shrink-0 size-12">
+<span class="material-symbols-outlined text-charcoal">quiz</span>
+</div>
+<div class="flex flex-col flex-1">
+<p class="text-charcoal text-lg font-bold leading-tight">How do closures capture variables?</p>
+<p class="text-charcoal/50 text-sm font-medium">Card 2 • Execution Context</p>
+</div>
+<div class="shrink-0 text-charcoal">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="flex items-center gap-4 bg-white border-2 border-charcoal p-5 rounded-xl hover:bg-slate-50 cursor-pointer transition-colors shadow-[2px_2px_0px_0px_rgba(26,26,26,1)]">
+<div class="bg-primary/20 border-2 border-charcoal flex items-center justify-center rounded-lg shrink-0 size-12">
+<span class="material-symbols-outlined text-charcoal">quiz</span>
+</div>
+<div class="flex flex-col flex-1">
+<p class="text-charcoal text-lg font-bold leading-tight">Difference between scope and closure?</p>
+<p class="text-charcoal/50 text-sm font-medium">Card 3 • Comparison</p>
+</div>
+<div class="shrink-0 text-charcoal">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="flex items-center gap-4 bg-white border-2 border-charcoal p-5 rounded-xl hover:bg-slate-50 cursor-pointer transition-colors shadow-[2px_2px_0px_0px_rgba(26,26,26,1)]">
+<div class="bg-primary/20 border-2 border-charcoal flex items-center justify-center rounded-lg shrink-0 size-12">
+<span class="material-symbols-outlined text-charcoal">quiz</span>
+</div>
+<div class="flex flex-col flex-1">
+<p class="text-charcoal text-lg font-bold leading-tight">Can closures cause memory leaks?</p>
+<p class="text-charcoal/50 text-sm font-medium">Card 4 • Performance</p>
+</div>
+<div class="shrink-0 text-charcoal">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+<!-- Card 5 -->
+<div class="flex items-center gap-4 bg-white border-2 border-charcoal p-5 rounded-xl hover:bg-slate-50 cursor-pointer transition-colors shadow-[2px_2px_0px_0px_rgba(26,26,26,1)]">
+<div class="bg-primary/20 border-2 border-charcoal flex items-center justify-center rounded-lg shrink-0 size-12">
+<span class="material-symbols-outlined text-charcoal">quiz</span>
+</div>
+<div class="flex flex-col flex-1">
+<p class="text-charcoal text-lg font-bold leading-tight">Common patterns using closures?</p>
+<p class="text-charcoal/50 text-sm font-medium">Card 5 • Best Practices</p>
+</div>
+<div class="shrink-0 text-charcoal">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+</div>
+<!-- Footer Section -->
+<footer class="mt-12 mb-8 flex flex-col items-center gap-4">
+<div class="h-px w-full bg-charcoal/10"></div>
+<div class="flex gap-6 text-charcoal/60 font-medium">
+<a class="hover:text-charcoal transition-colors" href="#">Dashboard</a>
+<a class="hover:text-charcoal transition-colors" href="#">Settings</a>
+<a class="hover:text-charcoal transition-colors" href="#">Help Center</a>
+</div>
+</footer>
+</div>
+</div>
+</body></html>

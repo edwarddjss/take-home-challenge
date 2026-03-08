@@ -1,75 +1,92 @@
 # MVP Scope
 
-This doc is for ruthless prioritization. If a feature is not required for a clear, usable first version, cut it.
+This app is a minimal AI-assisted study flow, not a full flashcard platform.
 
 ## Core Outcome
 
-- A user can create decks, add flashcards, and study them in a simple flow.
+- A user can enter a topic, generate a flashcard deck, study each card, mark confidence, and finish with a simple summary.
 
 ## Must Have
 
-- Create deck
-- Edit deck
-- Delete deck
-- View deck list
-- View deck detail
-- Add flashcard
-- Edit flashcard
-- Delete flashcard
-- Start study session
-- Flip card
-- Track simple study progress
+- Topic input on the home screen
+- Difficulty selection
+- Card count selection
+- Generate deck action
+- Loading state while the deck is being created
+- Generated deck preview with title and question list
+- `Regenerate deck` action
+- `Start studying` action
+- Study session with one card at a time
+- Reveal answer interaction
+- Confidence rating per card:
+  - `Blank`
+  - `Wobbly`
+  - `Locked`
+- Session progress indicator
+- Summary screen with totals for each confidence state
+- `Generate new deck` action
+- Persistent in-memory JSON storage for decks and current session data
 
 ## Should Have
 
-- Search or filter decks
-- Card count summaries
-- Lightweight validation messaging
-- Polished empty states
+- Basic validation for empty topic input
+- Helpful empty/loading/error states
+- Ability to review weak cards from the just-finished session
+- Ability to persist the most recent generated deck list in the in-memory store
 
 ## Nice to Have
 
-- Tags
-- Import/export
-- Keyboard shortcuts
-- Spaced repetition logic
-- Study history charts
+- Edit generated cards before studying
+- Regenerate a single card
+- Keyboard shortcuts during study
 
 ## Explicitly Out of Scope
 
 - Authentication
-- Multi-user features
+- User profiles
+- Settings pages
+- Search
+- Share actions
+- Public deck URLs
 - Database integration
-- Sharing decks publicly
-- Complex analytics
+- Rate limiting UI
+- Long-term analytics
+- Achievements, streaks, or gamification
+- Complex deck library management
+- Multi-user collaboration
+
+## Data Rule
+
+The MVP should only require data that can be stored cleanly in a persistent in-memory JSON object. If a feature implies a real database, do not include it.
 
 ## Timebox Plan
 
 ### Hour 0 to 1
 
-- Excalidraw planning
-- Finalize MVP and data model
+- Finalize flow, design tokens, and data model
+- Lock the MVP and cut list
 
 ### Hour 1 to 4
 
-- Build main screens and core CRUD flow
-- Build study session
+- Build home, loading, preview, study, and summary screens
+- Build the AI generation path
+- Build session state and confidence tracking
 
 ### Hour 4 to 5.5
 
-- Polish UX
+- Polish UI
 - Add validation
 - Add tests for critical logic
-- Improve README
+- Write README notes
 
 ### Hour 5.5 to 6
 
-- Final review
-- Verify deliverables
+- Verify challenge deliverables
+- Final pass on README and planning artifacts
 - Submit
 
 ## Cut List If Time Slips
 
-1. 
-2. 
-3. 
+1. `Review weak cards`
+2. Editing generated cards before study
+3. Any non-essential decorative UI or secondary helper copy

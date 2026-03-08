@@ -1,0 +1,1 @@
+This folder contains screenshots of features or components we would likely add in the future for this application. An example is in `navbar.png`, where it contains profile, decks, stats, etc. This would be nice to have in the future.
