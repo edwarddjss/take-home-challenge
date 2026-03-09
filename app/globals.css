@@ -8,6 +8,9 @@
   --color-butter: #fdf3a3;
   --color-charcoal: #1a1a1a;
   --color-muted: rgba(26, 26, 26, 0.72);
+  --color-status-blank: #ffcfbf;
+  --color-status-wobbly: #fdf3a3;
+  --color-status-locked: #13ec80;
   --border-default: 1.5px solid rgba(26, 26, 26, 0.92);
   --border-subtle: 1px solid rgba(26, 26, 26, 0.18);
   --shadow-soft: 2px 2px 0 0 rgba(26, 26, 26, 0.92);
@@ -50,7 +53,7 @@ body {
   display: flex;
 }
 
-.app-main > * {
+.app-main>* {
   flex: 1;
 }
 

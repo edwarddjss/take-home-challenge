@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
 import { TopNav } from "@/components/layout/top-nav";
 import {
   defaultCardCount,
@@ -15,7 +16,7 @@ import { isDeckSaved, saveGeneratedDeck, useSavedDecks } from "@/lib/saved-decks
 import type { GenerateDeckErrorResponse, GeneratedDeck } from "@/types/ai";
 import type { CardCount, Difficulty } from "@/types/deck";
 
-type ScreenState = "form" | "loading" | "preview" | "study";
+type ScreenState = "form" | "loading" | "preview" | "study" | "error";
 
 type GenerateDeckScreenProps = {
   minimumLoadingMs?: number;
@@ -51,22 +52,32 @@ export function GenerateDeckScreen({
   const [cardCount, setCardCount] = useState<CardCount>(defaultCardCount);
   const [deck, setDeck] = useState<GeneratedDeck | null>(null);
   const [difficulty, setDifficulty] = useState<Difficulty>(defaultDifficulty);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [screen, setScreen] = useState<ScreenState>("form");
   const [topic, setTopic] = useState("");
 
   async function generateDeck() {
-    const startedAt = Date.now();
+    const trimmed = topic.trim();
+    if (!trimmed) return;
 
     setScreen("loading");
-    const nextDeck = await requestDeck({ topic, difficulty, cardCount });
-    const remainingDelay = minimumLoadingMs - (Date.now() - startedAt);
+    setErrorMessage(null);
 
-    if (remainingDelay > 0) {
-      await new Promise((resolve) => window.setTimeout(resolve, remainingDelay));
+    try {
+      const startedAt = Date.now();
+      const nextDeck = await requestDeck({ topic: trimmed, difficulty, cardCount });
+      const remainingDelay = minimumLoadingMs - (Date.now() - startedAt);
+
+      if (remainingDelay > 0) {
+        await new Promise((resolve) => window.setTimeout(resolve, remainingDelay));
+      }
+
+      setDeck(nextDeck);
+      setScreen("preview");
+    } catch (err) {
+      setErrorMessage(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+      setScreen("error");
     }
-
-    setDeck(nextDeck);
-    setScreen("preview");
   }
 
   function returnToEditScreen() {
@@ -92,7 +103,7 @@ export function GenerateDeckScreen({
   }
 
   return (
-    <main className={`screen-shell screen-shell-${screen}`}>
+    <main className={`screen-shell screen-shell-${screen === "error" ? "form" : screen}`}>
       <div className="screen-frame">
         <TopNav />
         <div className="screen-content">
@@ -113,17 +124,30 @@ export function GenerateDeckScreen({
 
           {screen === "loading" ? <GenerateDeckLoadingScreen /> : null}
 
+          {screen === "error" ? (
+            <section className="screen-panel">
+              <div className="form-stack">
+                <p className="field-label">Generation failed</p>
+                <p className="field-help">{errorMessage}</p>
+                <Button onClick={returnToEditScreen} type="button">
+                  Try again
+                </Button>
+              </div>
+            </section>
+          ) : null}
+
           {screen === "preview" && deck ? (
-          <GenerateDeckPreviewScreen
-            deck={deck}
-            isSavedDeck={isDeckSaved(deck)}
-            onRegenerate={returnToEditScreen}
-            onSaveDeck={() => saveGeneratedDeck(deck)}
-            onStartStudying={startStudying}
-          />
-        ) : null}
+            <GenerateDeckPreviewScreen
+              deck={deck}
+              isSavedDeck={isDeckSaved(deck)}
+              onRegenerate={returnToEditScreen}
+              onSaveDeck={() => saveGeneratedDeck(deck)}
+              onStartStudying={startStudying}
+            />
+          ) : null}
         </div>
       </div>
     </main>
   );
 }
+

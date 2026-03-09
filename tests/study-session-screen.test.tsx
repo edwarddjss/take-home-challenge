@@ -38,7 +38,7 @@ const deck: GeneratedDeck = {
 };
 
 describe("StudySessionScreen", () => {
-  it("prevents immediate reveal and allows blank to reveal the answer", () => {
+  it("reveals the answer and records blank when Blank is tapped before reveal", () => {
     const now = 0;
 
     render(
@@ -46,8 +46,8 @@ describe("StudySessionScreen", () => {
         deck={deck}
         getNow={() => now}
         minimumRevealMs={4000}
-        onClose={() => {}}
-        onGenerateNewDeck={() => {}}
+        onClose={() => { }}
+        onGenerateNewDeck={() => { }}
       />,
     );
 
@@ -58,15 +58,40 @@ describe("StudySessionScreen", () => {
         "Try your best first. If you are blank, tap Blank to reveal the answer.",
       ),
     ).toBeInTheDocument();
-    expect(
-      screen.queryByText("Raw structure mixed with approachable softness."),
-    ).not.toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("button", { name: "Blank" }));
 
     expect(
       screen.getByText("Raw structure mixed with approachable softness."),
     ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: /Next card/ }),
+    ).toBeInTheDocument();
+  });
+
+  it("advances to the next card via the Next card button after blank", () => {
+    const now = 0;
+
+    render(
+      <StudySessionScreen
+        deck={deck}
+        getNow={() => now}
+        minimumRevealMs={4000}
+        onClose={() => { }}
+        onGenerateNewDeck={() => { }}
+      />,
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Blank" }));
+    fireEvent.click(screen.getByRole("button", { name: /Next card/ }));
+
+    expect(
+      screen.getByRole("heading", {
+        level: 1,
+        name: "What makes it feel softer than hard brutalism?",
+      }),
+    ).toBeInTheDocument();
+    expect(screen.getByText("2/5")).toBeInTheDocument();
   });
 
   it("advances to the next card after a confidence choice once the answer is revealed", () => {
@@ -77,8 +102,8 @@ describe("StudySessionScreen", () => {
         deck={deck}
         getNow={() => now}
         minimumRevealMs={4000}
-        onClose={() => {}}
-        onGenerateNewDeck={() => {}}
+        onClose={() => { }}
+        onGenerateNewDeck={() => { }}
       />,
     );
 
@@ -96,9 +121,9 @@ describe("StudySessionScreen", () => {
   });
 
   it("shows the summary screen after the final card is rated", () => {
-    const singleCardDeck: GeneratedDeck = {
+    const singleCardDeck = {
       ...deck,
-      cardCount: 1,
+      cardCount: 5 as const,
       cards: [deck.cards[0]],
     };
     let now = 0;
@@ -108,8 +133,8 @@ describe("StudySessionScreen", () => {
         deck={singleCardDeck}
         getNow={() => now}
         minimumRevealMs={4000}
-        onClose={() => {}}
-        onGenerateNewDeck={() => {}}
+        onClose={() => { }}
+        onGenerateNewDeck={() => { }}
       />,
     );
 
@@ -122,3 +147,4 @@ describe("StudySessionScreen", () => {
     ).toBeInTheDocument();
   });
 });
+

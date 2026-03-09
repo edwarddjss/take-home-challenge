@@ -70,9 +70,17 @@
   padding: 1.5rem;
 }
 
-.summary-count-card-blank { background: #f08adc; }
-.summary-count-card-wobbly { background: var(--color-primary); }
-.summary-count-card-locked { background: #2faba7; color: var(--color-surface); }
+.summary-count-card-blank {
+  background: var(--color-status-blank);
+}
+
+.summary-count-card-wobbly {
+  background: var(--color-status-wobbly);
+}
+
+.summary-count-card-locked {
+  background: var(--color-status-locked);
+}
 
 .summary-count-label {
   font-size: 1.1rem;
@@ -123,10 +131,16 @@
   height: 100%;
 }
 
-.summary-metric-fill-primary { background: var(--color-primary); }
-.summary-metric-fill-secondary { background: #f08adc; }
+.summary-metric-fill-primary {
+  background: var(--color-status-locked);
+}
+
+.summary-metric-fill-secondary {
+  background: var(--color-status-blank);
+}
 
 @media (max-width: 42rem) {
+
   .summary-actions .primary-button,
   .summary-actions .option-button {
     width: 100%;

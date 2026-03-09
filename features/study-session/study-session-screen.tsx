@@ -29,6 +29,7 @@ export function StudySessionScreen({
   const [answers, setAnswers] = useState<SessionAnswer[]>([]);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [answerRevealed, setAnswerRevealed] = useState(false);
+  const [blankRecorded, setBlankRecorded] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [cardStartedAt, setCardStartedAt] = useState(() => getNow());
   const [sessionComplete, setSessionComplete] = useState(false);
@@ -41,22 +42,28 @@ export function StudySessionScreen({
     </button>
   );
 
-  function startNextCard() {
+  function advanceToNextCard() {
     setAnswerRevealed(false);
+    setBlankRecorded(false);
     setMessage(null);
     setCardStartedAt(getNow());
   }
 
-  function handleReveal() {
-    if (answerRevealed) {
+  function handleAdvance() {
+    if (currentCardIndex === deck.cards.length - 1) {
+      setSessionComplete(true);
       return;
     }
+    setCurrentCardIndex((current) => current + 1);
+    advanceToNextCard();
+  }
 
+  function handleReveal() {
+    if (answerRevealed) return;
     if (getNow() - cardStartedAt < minimumRevealMs) {
       setMessage(earlyRevealMessage);
       return;
     }
-
     setAnswerRevealed(true);
     setMessage(null);
   }
@@ -65,24 +72,22 @@ export function StudySessionScreen({
     if (!answerRevealed) {
       if (confidence === "blank") {
         setAnswerRevealed(true);
+        setBlankRecorded(true);
         setMessage(null);
+        setAnswers((c) => [...c, { cardPosition: currentCard.position, confidence: "blank" }]);
         return;
       }
-
       setMessage(ratingBeforeRevealMessage);
       return;
     }
-
-    setAnswers((current) => [...current, { cardPosition: currentCard.position, confidence }]);
-
+    setAnswers((c) => [...c, { cardPosition: currentCard.position, confidence }]);
     if (currentCardIndex === deck.cards.length - 1) {
       setSessionComplete(true);
       setMessage(null);
       return;
     }
-
     setCurrentCardIndex((current) => current + 1);
-    startNextCard();
+    advanceToNextCard();
   }
 
   if (sessionComplete) {
@@ -109,12 +114,18 @@ export function StudySessionScreen({
         <TopNav rightSlot={closeButton} />
         <section className="study-shell">
           <ProgressBar current={currentStep} label="Current session" total={deck.cards.length} />
-          <StudySessionCard answer={currentCard.answer} answerRevealed={answerRevealed} onReveal={handleReveal} question={currentCard.question} />
-          {message ? <p className="study-message">{message}</p> : null}
-          <ConfidenceActions
+          <StudySessionCard
+            answer={currentCard.answer}
             answerRevealed={answerRevealed}
-            onSelect={handleConfidence}
+            blankRecorded={blankRecorded}
+            onAdvance={handleAdvance}
+            onReveal={handleReveal}
+            question={currentCard.question}
           />
+          {message ? <p className="study-message">{message}</p> : null}
+          {!blankRecorded ? (
+            <ConfidenceActions answerRevealed={answerRevealed} onSelect={handleConfidence} />
+          ) : null}
           <div aria-hidden="true" className="study-dots">
             <span className="study-dot study-dot-active" />
             <span className="study-dot" />
@@ -125,3 +136,4 @@ export function StudySessionScreen({
     </main>
   );
 }
+

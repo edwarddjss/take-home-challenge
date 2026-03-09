@@ -3,18 +3,39 @@
 import { useSyncExternalStore } from "react";
 import type { GeneratedDeck } from "@/types/ai";
 
+const storageKey = "deck:saved-decks";
+
 export type SavedDeckEntry = {
   deck: GeneratedDeck;
   id: string;
   savedAt: string;
 };
 
-let savedDecks: SavedDeckEntry[] = [];
+let savedDecks: SavedDeckEntry[] = loadFromStorage();
 
 const listeners = new Set<() => void>();
 
 function emitChange() {
   listeners.forEach((listener) => listener());
+}
+
+function persistToStorage() {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(storageKey, JSON.stringify(savedDecks));
+  } catch {
+    // Storage full or unavailable — silently ignore
+  }
+}
+
+function loadFromStorage(): SavedDeckEntry[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = window.localStorage.getItem(storageKey);
+    return raw ? (JSON.parse(raw) as SavedDeckEntry[]) : [];
+  } catch {
+    return [];
+  }
 }
 
 function createSavedDeckId(deck: GeneratedDeck): string {
@@ -30,6 +51,7 @@ export function saveGeneratedDeck(deck: GeneratedDeck) {
   };
 
   savedDecks = [nextEntry, ...savedDecks.filter((entry) => entry.id !== id)];
+  persistToStorage();
   emitChange();
 }
 
@@ -61,5 +83,6 @@ export function useSavedDecks() {
 
 export function resetSavedDecks() {
   savedDecks = [];
+  persistToStorage();
   emitChange();
 }

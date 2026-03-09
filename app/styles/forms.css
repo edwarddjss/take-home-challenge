@@ -22,7 +22,7 @@
 }
 
 .field-help {
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   color: var(--color-muted);
 }
 
@@ -44,7 +44,7 @@
 
 .option-row {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 0.75rem;
 }
 
@@ -70,4 +70,21 @@
 .primary-button:focus-visible {
   outline: 3px solid var(--color-surface-alt);
   outline-offset: 2px;
+}
+
+.option-button:hover,
+.primary-button:hover {
+  box-shadow: 3px 3px 0 0 rgba(26, 26, 26, 0.92);
+  transform: translate(-0.5px, -0.5px);
+}
+
+.option-button:active,
+.primary-button:active {
+  box-shadow: 0 0 0 0 rgba(26, 26, 26, 0.92);
+  transform: translate(1px, 1px);
+}
+
+.option-button,
+.primary-button {
+  transition: box-shadow 0.12s, transform 0.12s;
 }

@@ -3,11 +3,14 @@ import { normalizeGeneratedDeck } from "@/lib/ai/normalize-generated-deck";
 describe("normalizeGeneratedDeck", () => {
   it("trims provider output, assigns positions, and falls back the title", () => {
     const deck = normalizeGeneratedDeck(
-      { topic: " basic geography ", difficulty: "easy", cardCount: 2 },
+      { topic: " basic geography ", difficulty: "easy", cardCount: 5 },
       {
         cards: [
           { question: " What is the capital of France? ", answer: " Paris " },
           { question: "What is the capital of Japan?", answer: " Tokyo " },
+          { question: "What is the capital of Germany?", answer: "Berlin" },
+          { question: "What is the capital of Italy?", answer: "Rome" },
+          { question: "What is the capital of Spain?", answer: "Madrid" },
         ],
         source: { provider: "mock" },
       },
@@ -24,6 +27,21 @@ describe("normalizeGeneratedDeck", () => {
         question: "What is the capital of Japan?",
         answer: "Tokyo",
         position: 1,
+      },
+      {
+        question: "What is the capital of Germany?",
+        answer: "Berlin",
+        position: 2,
+      },
+      {
+        question: "What is the capital of Italy?",
+        answer: "Rome",
+        position: 3,
+      },
+      {
+        question: "What is the capital of Spain?",
+        answer: "Madrid",
+        position: 4,
       },
     ]);
   });

@@ -43,6 +43,7 @@ export function GenerateDeckForm({
         <FieldLabel htmlFor="topic">What do you want to learn?</FieldLabel>
         <TextField
           id="topic"
+          required
           type="text"
           value={topic}
           onChange={(event) => onTopicChange(event.target.value)}

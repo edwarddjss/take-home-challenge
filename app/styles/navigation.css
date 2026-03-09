@@ -1,4 +1,7 @@
 .top-nav {
+  position: sticky;
+  top: clamp(0.75rem, 2vw, 1.5rem);
+  z-index: 10;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -11,8 +14,7 @@
 }
 
 .top-nav-brand,
-.top-nav-menu,
-.top-nav-spacer {
+.top-nav-menu {
   display: flex;
   align-items: center;
 }
@@ -48,10 +50,6 @@
   gap: 0.75rem;
 }
 
-.top-nav-spacer {
-  width: 7rem;
-}
-
 .top-nav-item {
   border: var(--border-default);
   border-radius: var(--radius-pill);
@@ -60,6 +58,12 @@
   padding: 0.65rem 1rem;
   font-size: 0.95rem;
   font-weight: 600;
+  transition: box-shadow 0.15s, transform 0.15s;
+}
+
+.top-nav-item:hover {
+  box-shadow: 3px 3px 0 0 rgba(26, 26, 26, 0.92);
+  transform: translate(-0.5px, -0.5px);
 }
 
 @media (max-width: 28rem) {
@@ -71,7 +75,8 @@
     font-size: 1.3rem;
   }
 
-  .top-nav-spacer {
-    width: 0;
+  .top-nav-item {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
   }
 }

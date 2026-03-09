@@ -18,7 +18,7 @@ describe("createOpenAIDeckGenerator", () => {
 
     const deck = await generator({
       instructions: "system prompt",
-      input: { topic: "basic geography", difficulty: "easy", cardCount: 1 },
+      input: { topic: "basic geography", difficulty: "easy", cardCount: 5 },
       prompt: "user prompt",
     });
 

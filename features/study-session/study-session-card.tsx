@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 type StudySessionCardProps = {
   answer: string;
   answerRevealed: boolean;
+  blankRecorded?: boolean;
+  onAdvance?: () => void;
   onReveal: () => void;
   question: string;
 };
@@ -10,13 +12,15 @@ type StudySessionCardProps = {
 export function StudySessionCard({
   answer,
   answerRevealed,
+  blankRecorded = false,
+  onAdvance,
   onReveal,
   question,
 }: StudySessionCardProps) {
   return (
     <section className="study-card">
       <span aria-hidden="true" className="study-card-quote">
-        “
+        {"\u201C"}
       </span>
       <div className="study-card-copy">
         <h1 className="study-card-question">{question}</h1>
@@ -27,7 +31,14 @@ export function StudySessionCard({
         )}
       </div>
       <div className="study-card-actions">
-        {answerRevealed ? (
+        {blankRecorded && onAdvance ? (
+          <>
+            <Button className="study-reveal-button" onClick={onAdvance} type="button">
+              Next card →
+            </Button>
+            <p className="study-card-face">Answer</p>
+          </>
+        ) : answerRevealed ? (
           <p className="study-card-face">Answer</p>
         ) : (
           <>
@@ -41,3 +52,4 @@ export function StudySessionCard({
     </section>
   );
 }
+

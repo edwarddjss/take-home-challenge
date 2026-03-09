@@ -46,6 +46,12 @@
 .saved-deck-card {
   text-decoration: none;
   color: inherit;
+  transition: box-shadow 0.12s, transform 0.12s;
+}
+
+.saved-deck-card:hover {
+  box-shadow: 3px 3px 0 0 rgba(26, 26, 26, 0.92);
+  transform: translate(-0.5px, -0.5px);
 }
 
 .saved-decks-empty-copy,

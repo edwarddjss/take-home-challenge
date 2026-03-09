@@ -1,10 +1,16 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
-import { appName } from "@/constants/app-shell";
+import { appName, savedDecksLabel } from "@/constants/app-shell";
 
 type TopNavProps = {
   rightSlot?: ReactNode;
 };
+
+const savedDecksLink = (
+  <Link className="top-nav-item" href="/decks">
+    {savedDecksLabel}
+  </Link>
+);
 
 export function TopNav({ rightSlot }: TopNavProps) {
   return (
@@ -16,13 +22,9 @@ export function TopNav({ rightSlot }: TopNavProps) {
         <span className="top-nav-brand-text">{appName}</span>
       </Link>
 
-      {rightSlot ? (
-        <nav aria-label="Primary" className="top-nav-menu">
-          {rightSlot}
-        </nav>
-      ) : (
-        <div aria-hidden="true" className="top-nav-spacer" />
-      )}
+      <nav aria-label="Primary" className="top-nav-menu">
+        {rightSlot ?? savedDecksLink}
+      </nav>
     </header>
   );
 }

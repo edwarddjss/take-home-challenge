@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { TopNav } from "@/components/layout/top-nav";
 import { GenerateDeckPreviewScreen } from "@/features/generate-deck/generate-deck-preview-screen";
 import { StudySessionScreen } from "@/features/study-session/study-session-screen";
@@ -25,7 +26,7 @@ export function SavedDeckDetailScreen({
             <section className="saved-decks-empty">
               <p className="saved-decks-empty-title">Saved deck not found.</p>
               <p className="saved-decks-empty-copy">
-                Return to saved decks and choose another deck.
+                <Link href="/decks">Return to saved decks</Link> and choose another deck.
               </p>
             </section>
           </div>
