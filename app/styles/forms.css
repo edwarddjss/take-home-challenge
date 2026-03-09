@@ -1,0 +1,73 @@
+.form-stack,
+.field-stack {
+  display: grid;
+}
+
+.form-stack {
+  gap: 1rem;
+}
+
+.field-stack {
+  gap: 0.5rem;
+}
+
+.field-label,
+.field-help {
+  margin: 0;
+}
+
+.field-label {
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.field-help {
+  font-size: 0.875rem;
+  color: var(--color-muted);
+}
+
+.text-input,
+.option-button,
+.primary-button {
+  border: var(--border-default);
+  border-radius: var(--radius-control);
+  box-shadow: var(--shadow-soft);
+  background: var(--color-surface);
+  color: var(--color-charcoal);
+}
+
+.text-input {
+  width: 100%;
+  min-height: clamp(3.25rem, 7vw, 3.75rem);
+  padding: 0.85rem 1rem;
+}
+
+.option-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr));
+  gap: 0.75rem;
+}
+
+.option-button,
+.primary-button {
+  min-height: clamp(3.25rem, 7vw, 3.75rem);
+  padding: 0.85rem 1rem;
+  font-weight: 700;
+}
+
+.option-button.is-active,
+.option-button[data-active="true"] {
+  background: var(--color-butter);
+}
+
+.primary-button {
+  background: var(--color-primary);
+  border-radius: var(--radius-pill);
+}
+
+.text-input:focus-visible,
+.option-button:focus-visible,
+.primary-button:focus-visible {
+  outline: 3px solid var(--color-surface-alt);
+  outline-offset: 2px;
+}

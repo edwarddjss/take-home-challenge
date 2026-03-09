@@ -1,0 +1,54 @@
+.screen-shell {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: clamp(1rem, 3vw, 2.5rem);
+  background: var(--color-bg);
+}
+
+.screen-shell-form {
+  background: var(--color-bg);
+}
+
+.screen-shell-loading {
+  background: var(--color-surface-alt);
+}
+
+.screen-shell-preview {
+  background: #dcefff;
+}
+
+.screen-shell-study {
+  background: #f4f4f1;
+}
+
+.screen-frame {
+  width: min(100%, 54rem);
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+.hero-block {
+  display: flex;
+  justify-content: center;
+}
+
+.screen-panel {
+  width: 100%;
+  display: grid;
+  gap: 1.5rem;
+  border: var(--border-default);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-soft);
+  background: var(--color-surface);
+  padding: clamp(1.25rem, 3vw, 2rem);
+}
+
+.app-title {
+  margin: 0;
+  font-size: clamp(3.5rem, 10vw, 5.75rem);
+  line-height: 0.9;
+  font-weight: 700;
+  text-align: center;
+  text-transform: lowercase;
+}

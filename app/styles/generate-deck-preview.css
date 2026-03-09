@@ -1,0 +1,72 @@
+.preview-shell,
+.preview-header {
+  display: grid;
+  gap: 1.75rem;
+}
+
+.preview-title,
+.preview-description,
+.preview-footer-label {
+  margin: 0;
+}
+
+.preview-title {
+  font-size: clamp(2.75rem, 8vw, 4.5rem);
+  line-height: 0.95;
+  font-weight: 700;
+}
+
+.preview-subtitle,
+.preview-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.preview-description,
+.preview-footer-label {
+  color: var(--color-muted);
+}
+
+.preview-description {
+  font-size: 1.15rem;
+}
+
+.preview-actions {
+  gap: 1rem;
+}
+
+.preview-actions .option-button,
+.preview-actions .primary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+}
+
+.preview-primary-action {
+  min-width: 14rem;
+}
+
+.preview-button-icon {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.preview-footer {
+  border-top: 1px solid rgba(26, 26, 26, 0.12);
+  padding-top: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.preview-footer-label {
+  font-size: 1.05rem;
+}
+
+@media (max-width: 42rem) {
+  .preview-actions {
+    display: grid;
+  }
+}

@@ -1,0 +1,54 @@
+.confidence-block {
+  display: grid;
+  gap: 1rem;
+  width: min(100%, 34rem);
+}
+
+.confidence-heading {
+  margin: 0;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.78rem;
+  color: var(--color-muted);
+}
+
+.confidence-grid {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.confidence-card {
+  flex: 1 1 10rem;
+  min-height: 8.5rem;
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 0.45rem;
+  border-radius: 1.75rem;
+}
+
+.confidence-card-blank { background: #f6b59f; }
+.confidence-card-wobbly { background: #f5e684; }
+.confidence-card-locked { background: var(--color-primary); }
+
+.confidence-icon {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.confidence-label {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.confidence-hint {
+  font-size: 0.8rem;
+}
+
+@media (max-width: 42rem) {
+  .confidence-grid {
+    display: grid;
+  }
+}

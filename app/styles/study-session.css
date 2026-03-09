@@ -1,0 +1,149 @@
+.study-shell,
+.study-card,
+.study-card-copy,
+.study-complete-card {
+  display: grid;
+}
+
+.study-shell {
+  gap: 1.5rem;
+  justify-items: center;
+  padding-block: 1rem 2rem;
+}
+
+.progress-bar-block,
+.study-card,
+.study-complete-card {
+  width: min(100%, 34rem);
+}
+
+.progress-bar-header,
+.study-dots {
+  display: flex;
+}
+
+.progress-bar-header {
+  justify-content: space-between;
+  align-items: end;
+  margin-bottom: 0.5rem;
+}
+
+.progress-bar-label,
+.progress-bar-count,
+.study-message,
+.study-card-face,
+.study-complete-copy {
+  margin: 0;
+}
+
+.progress-bar-label,
+.study-card-face {
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.78rem;
+  color: var(--color-muted);
+}
+
+.progress-bar-count {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.progress-bar-track {
+  width: 100%;
+  height: 1rem;
+  border: var(--border-default);
+  border-radius: 999px;
+  background: var(--color-surface);
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: var(--color-primary);
+}
+
+.study-card,
+.study-complete-card {
+  gap: 1.5rem;
+  border: var(--border-default);
+  border-radius: 2rem;
+  box-shadow: var(--shadow-soft);
+  background: var(--color-surface);
+  padding: clamp(1.5rem, 4vw, 2.25rem);
+}
+
+.study-card-quote,
+.study-card-question,
+.study-complete-title {
+  margin: 0;
+  text-align: center;
+}
+
+.study-card-quote {
+  font-size: 4rem;
+  line-height: 0.8;
+  color: rgba(26, 26, 26, 0.16);
+}
+
+.study-card-copy {
+  gap: 1rem;
+}
+
+.study-card-question,
+.study-complete-title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1;
+}
+
+.study-card-prompt,
+.study-card-answer,
+.study-complete-copy {
+  margin: 0;
+  text-align: center;
+  color: var(--color-muted);
+  font-size: 1.1rem;
+}
+
+.study-card-actions {
+  display: grid;
+  justify-items: center;
+  gap: 0.75rem;
+}
+
+.study-reveal-button,
+.study-complete-button {
+  min-width: min(100%, 19rem);
+}
+
+.study-message {
+  max-width: 30rem;
+  text-align: center;
+  color: #8f4b22;
+}
+
+.study-close-button {
+  width: 3rem;
+  height: 3rem;
+  border: var(--border-default);
+  border-radius: 999px;
+  box-shadow: var(--shadow-soft);
+  background: var(--color-surface);
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.study-dots {
+  gap: 0.6rem;
+}
+
+.study-dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 999px;
+  background: rgba(26, 26, 26, 0.12);
+}
+
+.study-dot-active {
+  background: rgba(26, 26, 26, 0.4);
+}

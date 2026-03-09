@@ -1,0 +1,130 @@
+.loading-shell,
+.loading-copy {
+  display: grid;
+  place-items: center;
+}
+
+.loading-shell {
+  width: 100%;
+  gap: 1.5rem;
+  justify-items: center;
+}
+
+.loading-illustration,
+.loading-card-front {
+  border: var(--border-default);
+  box-shadow: var(--shadow-soft);
+  background: var(--color-surface);
+}
+
+.loading-illustration {
+  width: min(100%, 28rem);
+  aspect-ratio: 4 / 3;
+  border-radius: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.loading-card {
+  position: absolute;
+  width: 10rem;
+  height: 13rem;
+  border: var(--border-default);
+  border-radius: 1.5rem;
+  left: 50%;
+  top: 50%;
+  transform-origin: center;
+}
+
+.loading-card-back {
+  background: var(--color-surface-alt);
+  transform: translate(-58%, -42%) rotate(-8deg);
+  animation: deck-bob-back 2.2s ease-in-out infinite;
+}
+
+.loading-card-mid {
+  background: #d7f5e8;
+  transform: translate(-53%, -46%) rotate(-4deg);
+  animation: deck-bob-mid 2.2s ease-in-out infinite;
+}
+
+.loading-card-front {
+  transform: translate(-48%, -50%);
+  animation: deck-bob-front 2.2s ease-in-out infinite;
+}
+
+.loading-dot,
+.loading-accent,
+.loading-sparkle {
+  position: absolute;
+}
+
+.loading-dot {
+  width: 1rem;
+  height: 1rem;
+  border: var(--border-default);
+  border-radius: 999px;
+}
+
+.loading-dot-top { left: 1rem; top: 1rem; }
+.loading-dot-bottom { right: 1rem; bottom: 1rem; }
+
+.loading-accent {
+  left: 1rem;
+  right: 1rem;
+  bottom: 1.4rem;
+  height: 0.7rem;
+  border-radius: 999px;
+  background: var(--color-primary);
+}
+
+.loading-sparkle {
+  right: -0.8rem;
+  top: -0.8rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  display: grid;
+  place-items: center;
+  border: var(--border-default);
+  border-radius: 999px;
+  background: var(--color-primary);
+  font-size: 1.4rem;
+  animation: sparkle-pulse 1.8s ease-in-out infinite;
+}
+
+.loading-copy {
+  gap: 0.5rem;
+  text-align: center;
+}
+
+.loading-title {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+}
+
+.loading-tip {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--color-muted);
+}
+
+@keyframes deck-bob-back {
+  0%, 100% { transform: translate(-58%, -42%) rotate(-8deg); }
+  50% { transform: translate(-58%, -45%) rotate(-9deg); }
+}
+
+@keyframes deck-bob-mid {
+  0%, 100% { transform: translate(-53%, -46%) rotate(-4deg); }
+  50% { transform: translate(-53%, -49%) rotate(-5deg); }
+}
+
+@keyframes deck-bob-front {
+  0%, 100% { transform: translate(-48%, -50%); }
+  50% { transform: translate(-48%, -53%); }
+}
+
+@keyframes sparkle-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}

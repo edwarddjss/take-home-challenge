@@ -13,4 +13,24 @@ describe("generateDeckWithProvider", () => {
     expect(deck.source.provider).toBe("mock");
     expect(deck.cards[0]?.position).toBe(0);
   });
+
+  it("preserves provider source metadata from a real generator", async () => {
+    const deck = await generateDeckWithProvider(
+      { topic: "basic geography", difficulty: "easy", cardCount: 5 },
+      async () => ({
+        title: "Basic Geography",
+        cards: Array.from({ length: 5 }, (_, position) => ({
+          question: `Question ${position + 1}`,
+          answer: `Answer ${position + 1}`,
+        })),
+        source: {
+          provider: "openai",
+          model: "gpt-4.1-nano",
+        },
+      }),
+    );
+
+    expect(deck.source.provider).toBe("openai");
+    expect(deck.source.model).toBe("gpt-4.1-nano");
+  });
 });

@@ -1,72 +1,120 @@
 "use client";
 
-"use client";
-
 import { useState } from "react";
 import { TopNav } from "@/components/layout/top-nav";
-import { Button } from "@/components/ui/button";
-import { FieldLabel } from "@/components/ui/field-label";
-import { SegmentedControl } from "@/components/ui/segmented-control";
-import { TextField } from "@/components/ui/text-field";
+import { GenerateDeckForm } from "@/features/generate-deck/generate-deck-form";
+import { GenerateDeckLoadingScreen } from "@/features/generate-deck/generate-deck-loading-screen";
+import { GenerateDeckPreviewScreen } from "@/features/generate-deck/generate-deck-preview-screen";
+import { StudySessionScreen } from "@/features/study-session/study-session-screen";
+import type { GenerateDeckErrorResponse, GeneratedDeck } from "@/types/ai";
 import type { CardCount, Difficulty } from "@/types/deck";
 
-const difficulties = [
-  { label: "easy", value: "easy" },
-  { label: "medium", value: "medium" },
-  { label: "hard", value: "hard" },
-] satisfies { label: string; value: Difficulty }[];
+type ScreenState = "form" | "loading" | "preview" | "study";
 
-const cardCounts = [
-  { label: "5", value: 5 },
-  { label: "10", value: 10 },
-  { label: "15", value: 15 },
-] satisfies { label: string; value: CardCount }[];
+const minimumLoadingDurationMs = 500;
 
-export function GenerateDeckScreen() {
-  const [topic, setTopic] = useState("");
-  const [difficulty, setDifficulty] = useState<Difficulty>("medium");
+type GenerateDeckScreenProps = {
+  minimumLoadingMs?: number;
+  requestDeck?: typeof requestGeneratedDeck;
+};
+
+async function requestGeneratedDeck(input: {
+  topic: string;
+  difficulty: Difficulty;
+  cardCount: CardCount;
+}): Promise<GeneratedDeck> {
+  const response = await fetch("/api/decks/generate", {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(input),
+  });
+
+  if (!response.ok) {
+    const error = (await response.json()) as GenerateDeckErrorResponse;
+    throw new Error(error.message);
+  }
+
+  return response.json() as Promise<GeneratedDeck>;
+}
+
+export function GenerateDeckScreen({
+  minimumLoadingMs = minimumLoadingDurationMs,
+  requestDeck = requestGeneratedDeck,
+}: GenerateDeckScreenProps) {
   const [cardCount, setCardCount] = useState<CardCount>(10);
+  const [deck, setDeck] = useState<GeneratedDeck | null>(null);
+  const [difficulty, setDifficulty] = useState<Difficulty>("medium");
+  const [screen, setScreen] = useState<ScreenState>("form");
+  const [topic, setTopic] = useState("");
+
+  async function generateDeck() {
+    const startedAt = Date.now();
+
+    setScreen("loading");
+    const nextDeck = await requestDeck({ topic, difficulty, cardCount });
+    const remainingDelay = minimumLoadingMs - (Date.now() - startedAt);
+
+    if (remainingDelay > 0) {
+      await new Promise((resolve) => window.setTimeout(resolve, remainingDelay));
+    }
+
+    setDeck(nextDeck);
+    setScreen("preview");
+  }
+
+  function returnToEditScreen() {
+    setScreen("form");
+  }
+
+  function startStudying() {
+    setScreen("study");
+  }
+
+  function returnToPreview() {
+    setScreen("preview");
+  }
 
   return (
-    <main className="screen-shell">
-      <TopNav />
+    <main className={`screen-shell screen-shell-${screen}`}>
+      <div className="screen-frame">
+        <TopNav rightSlot={screen === "form" ? <span className="top-nav-item">Saved decks</span> : undefined} />
 
-      <header className="hero-block">
-        <h1 className="app-title">Deck</h1>
-      </header>
+        {screen === "form" ? (
+          <>
+            <header className="hero-block">
+              <h1 className="app-title">Deck</h1>
+            </header>
+            <section className="screen-panel">
+              <GenerateDeckForm
+                cardCount={cardCount}
+                difficulty={difficulty}
+                onCardCountChange={setCardCount}
+                onDifficultyChange={setDifficulty}
+                onSubmit={generateDeck}
+                onTopicChange={setTopic}
+                submitting={false}
+                topic={topic}
+              />
+            </section>
+          </>
+        ) : null}
 
-      <section className="screen-panel">
-        <form className="form-stack" onSubmit={(event) => event.preventDefault()}>
-          <div className="field-stack">
-            <FieldLabel htmlFor="topic">What do you want to learn?</FieldLabel>
-            <TextField
-              id="topic"
-              type="text"
-              value={topic}
-              onChange={(event) => setTopic(event.target.value)}
-            />
-            <p className="field-help">AI generates a study deck from your topic.</p>
-          </div>
+        {screen === "loading" ? <GenerateDeckLoadingScreen /> : null}
 
-          <SegmentedControl
-            label="Difficulty"
-            onChange={setDifficulty}
-            options={difficulties}
-            value={difficulty}
+        {screen === "preview" && deck ? (
+          <GenerateDeckPreviewScreen
+            deck={deck}
+            onRegenerate={returnToEditScreen}
+            onStartStudying={startStudying}
           />
+        ) : null}
 
-          <SegmentedControl
-            label="Number of cards"
-            onChange={setCardCount}
-            options={cardCounts}
-            value={cardCount}
-          />
-
-          <Button type="submit">
-            Generate deck
-          </Button>
-        </form>
-      </section>
+        {screen === "study" && deck ? (
+          <StudySessionScreen deck={deck} onClose={returnToPreview} />
+        ) : null}
+      </div>
     </main>
   );
 }

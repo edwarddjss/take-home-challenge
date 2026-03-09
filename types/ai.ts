@@ -5,6 +5,16 @@ export type DeckSource = {
   model?: string;
 };
 
+export type GenerateDeckErrorCode =
+  | "invalid_input"
+  | "missing_api_key"
+  | "provider_error";
+
+export type GenerateDeckErrorResponse = {
+  code: GenerateDeckErrorCode;
+  message: string;
+};
+
 export type GenerateDeckInput = {
   topic: string;
   difficulty: Difficulty;
@@ -38,6 +48,7 @@ export type GeneratedDeck = {
 };
 
 export type DeckGenerationRequest = {
+  instructions: string;
   input: GenerateDeckInput;
   prompt: string;
 };
