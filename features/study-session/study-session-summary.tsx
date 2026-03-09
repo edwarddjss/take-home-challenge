@@ -14,7 +14,6 @@ export function StudySessionSummary({
 }: StudySessionSummaryProps) {
   return (
     <section className="summary-shell">
-      <p className="summary-pill">Session complete</p>
       <div className="summary-copy">
         <h1 className="summary-title">Great session!</h1>
         <p className="summary-description">
