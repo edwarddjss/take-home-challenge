@@ -20,13 +20,15 @@ export function GenerateDeckLoadingScreen() {
   return (
     <section className="loading-shell">
       <div aria-hidden="true" className="loading-illustration">
-        <div className="loading-card loading-card-back" />
-        <div className="loading-card loading-card-mid" />
-        <div className="loading-card loading-card-front">
-          <span className="loading-dot loading-dot-top" />
-          <span className="loading-dot loading-dot-bottom" />
-          <span className="loading-accent" />
-          <span className="loading-sparkle">✦</span>
+        <div className="loading-stage">
+          <div className="loading-card loading-card-back" />
+          <div className="loading-card loading-card-mid" />
+          <div className="loading-card loading-card-front">
+            <span className="loading-dot loading-dot-top" />
+            <span className="loading-dot loading-dot-bottom" />
+            <span className="loading-accent" />
+            <span className="loading-sparkle">✦</span>
+          </div>
         </div>
       </div>
 

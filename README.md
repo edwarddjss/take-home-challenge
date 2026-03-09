@@ -2,24 +2,35 @@
 
 Deck is a minimal AI-generated flashcard MVP built for a timeboxed take-home challenge.
 
-## Current MVP
+## Features
 
 - Generate a deck from a topic, difficulty, and card count
 - Review the generated deck before studying
 - Run a study session with `Blank`, `Wobbly`, and `Locked` confidence ratings
 - Save decks locally in the browser for later review
-- Optionally gate the app behind a server-verified access code
+- Optionally gate the app behind a server-enforced access code
 
 ## Stack
 
 - Next.js 16 App Router
 - React 19
-- Vanilla CSS with shared design tokens
+- TypeScript
+- Vanilla CSS
 - OpenAI Responses API via the official `openai` SDK
 - Vitest + React Testing Library
-- `localStorage` for saved decks
+- Browser `localStorage` for saved decks
 
-## Local Setup
+## Architecture
+
+- `app/`: routes, layout, server action, and API route
+- `features/`: screen-level feature modules
+- `components/`: shared UI and layout primitives
+- `lib/ai/`: prompt building, provider call, normalization, retry, and validation
+- `lib/saved-decks-store.ts`: browser-local saved deck store
+- `lib/access/`: access-code token helpers
+- `types/` and `constants/`: shared domain types and config
+
+## Setup
 
 1. Install dependencies:
 
@@ -37,7 +48,7 @@ OPENAI_MODEL=gpt-4.1-nano
 ACCESS_CODE=your_secret_passcode
 ```
 
-3. Start the app:
+3. Run the app:
 
 ```bash
 pnpm dev
@@ -53,6 +64,6 @@ pnpm build
 
 ## Notes
 
-- Saved decks are intentionally browser-local for MVP speed.
-- The access gate is enforced on the server through middleware and a server-issued auth cookie.
-- The AI generation pipeline is split into prompt building, provider execution, normalization, and retry handling to keep failures isolated and testable.
+- Deck generation is served through `POST /api/decks/generate`.
+- Saved decks are browser-local and not shared across devices.
+- Access control is enforced through `proxy.ts` and a server-issued auth cookie.

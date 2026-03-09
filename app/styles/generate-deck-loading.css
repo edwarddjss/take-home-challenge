@@ -20,15 +20,25 @@
 .loading-illustration {
   width: min(100%, 28rem);
   aspect-ratio: 4 / 3;
+  display: grid;
+  place-items: center;
+  padding: clamp(1rem, 4vw, 1.75rem);
   border-radius: 2rem;
   position: relative;
   overflow: hidden;
 }
 
+.loading-stage {
+  position: relative;
+  width: min(100%, 15rem);
+  height: min(100%, 16rem);
+  isolation: isolate;
+}
+
 .loading-card {
   position: absolute;
-  width: 10rem;
-  height: 13rem;
+  width: clamp(8.5rem, 28vw, 10rem);
+  height: clamp(11rem, 36vw, 13rem);
   border: var(--border-default);
   border-radius: 1.5rem;
   left: 50%;
@@ -38,19 +48,20 @@
 
 .loading-card-back {
   background: var(--color-surface-alt);
-  transform: translate(-58%, -42%) rotate(-8deg);
-  animation: deck-bob-back 2.2s ease-in-out infinite;
+  transform: translate(-57%, -44%) rotate(-8deg);
+  animation: deck-bob-back 2.4s ease-in-out infinite;
 }
 
 .loading-card-mid {
   background: #d7f5e8;
-  transform: translate(-53%, -46%) rotate(-4deg);
-  animation: deck-bob-mid 2.2s ease-in-out infinite;
+  transform: translate(-53%, -47%) rotate(-4deg);
+  animation: deck-bob-mid 2.4s ease-in-out infinite;
 }
 
 .loading-card-front {
-  transform: translate(-48%, -50%);
-  animation: deck-bob-front 2.2s ease-in-out infinite;
+  overflow: visible;
+  transform: translate(-49%, -50%);
+  animation: deck-bob-front 2.4s ease-in-out infinite;
 }
 
 .loading-dot,
@@ -70,26 +81,26 @@
 .loading-dot-bottom { right: 1rem; bottom: 1rem; }
 
 .loading-accent {
-  left: 1rem;
-  right: 1rem;
-  bottom: 1.4rem;
+  left: 1.2rem;
+  right: 1.8rem;
+  bottom: 1.35rem;
   height: 0.7rem;
   border-radius: 999px;
   background: var(--color-primary);
 }
 
 .loading-sparkle {
-  right: -0.8rem;
-  top: -0.8rem;
-  width: 3.5rem;
-  height: 3.5rem;
+  right: -0.45rem;
+  top: -0.45rem;
+  width: 3.25rem;
+  height: 3.25rem;
   display: grid;
   place-items: center;
   border: var(--border-default);
   border-radius: 999px;
   background: var(--color-primary);
   font-size: 1.4rem;
-  animation: sparkle-pulse 1.8s ease-in-out infinite;
+  animation: sparkle-pulse 2s ease-in-out infinite;
 }
 
 .loading-copy {
@@ -110,21 +121,41 @@
 }
 
 @keyframes deck-bob-back {
-  0%, 100% { transform: translate(-58%, -42%) rotate(-8deg); }
-  50% { transform: translate(-58%, -45%) rotate(-9deg); }
+  0%, 100% { transform: translate(-57%, -44%) rotate(-8deg); }
+  50% { transform: translate(-57%, -46%) rotate(-9deg); }
 }
 
 @keyframes deck-bob-mid {
-  0%, 100% { transform: translate(-53%, -46%) rotate(-4deg); }
+  0%, 100% { transform: translate(-53%, -47%) rotate(-4deg); }
   50% { transform: translate(-53%, -49%) rotate(-5deg); }
 }
 
 @keyframes deck-bob-front {
-  0%, 100% { transform: translate(-48%, -50%); }
-  50% { transform: translate(-48%, -53%); }
+  0%, 100% { transform: translate(-49%, -50%); }
+  50% { transform: translate(-49%, -52%); }
 }
 
 @keyframes sparkle-pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.08); }
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.06) rotate(8deg); }
+}
+
+@media (max-width: 42rem) {
+  .loading-shell {
+    gap: 1rem;
+  }
+
+  .loading-illustration {
+    width: min(100%, 22rem);
+    border-radius: 1.5rem;
+  }
+
+  .loading-stage {
+    width: min(100%, 12.5rem);
+    height: 13.5rem;
+  }
+
+  .loading-title {
+    font-size: clamp(1.75rem, 9vw, 2.4rem);
+  }
 }
