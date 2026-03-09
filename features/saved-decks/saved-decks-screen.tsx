@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { TopNav } from "@/components/layout/top-nav";
-import { useSavedDecks } from "@/lib/saved-decks-store";
+import { deleteSavedDeck, useSavedDecks } from "@/lib/saved-decks-store";
 
 function formatSavedAt(savedAt: string): string {
   return new Intl.DateTimeFormat("en-US", {
@@ -14,6 +14,12 @@ function formatSavedAt(savedAt: string): string {
 
 export function SavedDecksScreen() {
   const savedDecks = useSavedDecks();
+
+  function handleDelete(event: React.MouseEvent, id: string) {
+    event.preventDefault();
+    event.stopPropagation();
+    deleteSavedDeck(id);
+  }
 
   return (
     <main className="screen-shell screen-shell-form">
@@ -35,14 +41,24 @@ export function SavedDecksScreen() {
             ) : (
               <div className="saved-decks-list">
                 {savedDecks.map((entry) => (
-                  <Link className="saved-deck-card" href={`/decks/${entry.id}`} key={entry.id}>
-                    <div className="saved-deck-copy">
-                      <h2 className="saved-deck-title">{entry.deck.title}</h2>
-                      <p className="saved-deck-meta">
-                        {entry.deck.cardCount} cards • {formatSavedAt(entry.savedAt)}
-                      </p>
-                    </div>
-                  </Link>
+                  <div className="saved-deck-row" key={entry.id}>
+                    <Link className="saved-deck-card" href={`/decks/${entry.id}`}>
+                      <div className="saved-deck-copy">
+                        <h2 className="saved-deck-title">{entry.deck.title}</h2>
+                        <p className="saved-deck-meta">
+                          {entry.deck.cardCount} cards • {formatSavedAt(entry.savedAt)}
+                        </p>
+                      </div>
+                    </Link>
+                    <button
+                      aria-label={`Delete ${entry.deck.title}`}
+                      className="saved-deck-delete"
+                      onClick={(e) => handleDelete(e, entry.id)}
+                      type="button"
+                    >
+                      ×
+                    </button>
+                  </div>
                 ))}
               </div>
             )}

@@ -1,7 +1,6 @@
 import { CardListItem } from "@/components/ui/card-list-item";
 import { CardPreviewPanel } from "@/components/ui/card-preview-panel";
 import { Button } from "@/components/ui/button";
-import { previewCardLabels } from "@/constants/deck";
 import { StatusPill } from "@/components/ui/status-pill";
 import type { GeneratedDeck } from "@/types/ai";
 
@@ -65,7 +64,6 @@ export function GenerateDeckPreviewScreen({
             <CardListItem
               key={`${card.question}-${index}`}
               index={index}
-              label={previewCardLabels[index] ?? "Study card"}
               question={card.question}
             />
           ))}

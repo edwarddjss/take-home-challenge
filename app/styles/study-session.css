@@ -6,6 +6,8 @@
 }
 
 .study-shell {
+  position: relative;
+  z-index: 1;
   gap: 1.5rem;
   justify-items: center;
   padding-block: 1rem 2rem;
@@ -50,6 +52,8 @@
 }
 
 .progress-bar-track {
+  position: relative;
+  z-index: 1;
   width: 100%;
   height: 1rem;
   border: var(--border-default);

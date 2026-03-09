@@ -1,7 +1,6 @@
 .saved-decks-shell,
 .saved-decks-header,
 .saved-decks-empty,
-.saved-deck-card,
 .saved-deck-copy {
   display: grid;
 }
@@ -34,8 +33,7 @@
   gap: 1rem;
 }
 
-.saved-decks-empty,
-.saved-deck-card {
+.saved-decks-empty {
   border: var(--border-default);
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-soft);
@@ -43,15 +41,47 @@
   padding: 1.25rem;
 }
 
-.saved-deck-card {
-  text-decoration: none;
-  color: inherit;
+.saved-deck-row {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  border: var(--border-default);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-soft);
+  background: var(--color-surface);
   transition: box-shadow 0.12s, transform 0.12s;
 }
 
-.saved-deck-card:hover {
+.saved-deck-row:hover {
   box-shadow: 3px 3px 0 0 rgba(26, 26, 26, 0.92);
   transform: translate(-0.5px, -0.5px);
+}
+
+.saved-deck-card {
+  flex: 1;
+  display: grid;
+  text-decoration: none;
+  color: inherit;
+  padding: 1.25rem;
+}
+
+.saved-deck-delete {
+  display: grid;
+  place-items: center;
+  width: 3.5rem;
+  border: none;
+  border-left: var(--border-default);
+  border-radius: 0 var(--radius-card) var(--radius-card) 0;
+  background: transparent;
+  font-size: 1.3rem;
+  color: var(--color-muted);
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+}
+
+.saved-deck-delete:hover {
+  background: rgba(220, 80, 60, 0.08);
+  color: #c23a2a;
 }
 
 .saved-decks-empty-copy,

@@ -39,7 +39,8 @@ function loadFromStorage(): SavedDeckEntry[] {
 }
 
 function createSavedDeckId(deck: GeneratedDeck): string {
-  return `${deck.topic.trim().toLowerCase()}-${deck.difficulty}`;
+  const slug = deck.topic.trim().toLowerCase().replace(/\s+/g, "-");
+  return `${slug}-${deck.difficulty}`;
 }
 
 export function saveGeneratedDeck(deck: GeneratedDeck) {
@@ -79,6 +80,12 @@ export function useSavedDecks() {
     getSavedDecksSnapshot,
     getSavedDecksSnapshot,
   );
+}
+
+export function deleteSavedDeck(id: string) {
+  savedDecks = savedDecks.filter((entry) => entry.id !== id);
+  persistToStorage();
+  emitChange();
 }
 
 export function resetSavedDecks() {

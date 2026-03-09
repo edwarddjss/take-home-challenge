@@ -16,10 +16,3 @@ export const cardCountOptions = [
   { label: "15", value: 15 },
 ] satisfies { label: string; value: CardCount }[];
 
-export const previewCardLabels = [
-  "Fundamental concept",
-  "Execution context",
-  "Comparison",
-  "Performance",
-  "Best practices",
-];
