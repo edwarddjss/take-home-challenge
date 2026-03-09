@@ -1,0 +1,33 @@
+.study-message {
+  max-width: 30rem;
+  margin: 0;
+  text-align: center;
+  color: #8f4b22;
+}
+
+.study-close-button {
+  width: 3rem;
+  height: 3rem;
+  border: var(--border-default);
+  border-radius: 999px;
+  box-shadow: var(--shadow-soft);
+  background: var(--color-surface);
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.study-dots {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.study-dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 999px;
+  background: rgba(26, 26, 26, 0.12);
+}
+
+.study-dot-active {
+  background: rgba(26, 26, 26, 0.4);
+}

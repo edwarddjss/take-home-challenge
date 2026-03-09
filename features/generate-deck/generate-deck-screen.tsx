@@ -1,19 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { TopNav } from "@/components/layout/top-nav";
 import {
   defaultCardCount,
   defaultDifficulty,
   minimumLoadingDurationMs,
 } from "@/constants/deck";
+import { GenerateDeckErrorScreen } from "@/features/generate-deck/generate-deck-error-screen";
 import { GenerateDeckForm } from "@/features/generate-deck/generate-deck-form";
 import { GenerateDeckLoadingScreen } from "@/features/generate-deck/generate-deck-loading-screen";
 import { GenerateDeckPreviewScreen } from "@/features/generate-deck/generate-deck-preview-screen";
+import { requestGeneratedDeck } from "@/features/generate-deck/request-generated-deck";
 import { StudySessionScreen } from "@/features/study-session/study-session-screen";
 import { isDeckSaved, saveGeneratedDeck, useSavedDecks } from "@/lib/saved-decks-store";
-import type { GenerateDeckErrorResponse, GeneratedDeck } from "@/types/ai";
+import type { GeneratedDeck } from "@/types/ai";
 import type { CardCount, Difficulty } from "@/types/deck";
 
 type ScreenState = "form" | "loading" | "preview" | "study" | "error";
@@ -22,27 +23,6 @@ type GenerateDeckScreenProps = {
   minimumLoadingMs?: number;
   requestDeck?: typeof requestGeneratedDeck;
 };
-
-async function requestGeneratedDeck(input: {
-  topic: string;
-  difficulty: Difficulty;
-  cardCount: CardCount;
-}): Promise<GeneratedDeck> {
-  const response = await fetch("/api/decks/generate", {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-    },
-    body: JSON.stringify(input),
-  });
-
-  if (!response.ok) {
-    const error = (await response.json()) as GenerateDeckErrorResponse;
-    throw new Error(error.message);
-  }
-
-  return response.json() as Promise<GeneratedDeck>;
-}
 
 export function GenerateDeckScreen({
   minimumLoadingMs = minimumLoadingDurationMs,
@@ -135,15 +115,7 @@ export function GenerateDeckScreen({
           {screen === "loading" ? <GenerateDeckLoadingScreen /> : null}
 
           {screen === "error" ? (
-            <section className="screen-panel">
-              <div className="form-stack">
-                <p className="field-label">Generation failed</p>
-                <p className="field-help">{errorMessage}</p>
-                <Button onClick={returnToEditScreen} type="button">
-                  Try again
-                </Button>
-              </div>
-            </section>
+            <GenerateDeckErrorScreen errorMessage={errorMessage} onRetry={returnToEditScreen} />
           ) : null}
 
           {screen === "preview" && deck ? (
@@ -160,4 +132,3 @@ export function GenerateDeckScreen({
     </main>
   );
 }
-

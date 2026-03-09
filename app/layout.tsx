@@ -2,17 +2,21 @@ import type { Metadata } from "next";
 import { Space_Grotesk } from "next/font/google";
 import { AppFooter } from "@/components/layout/app-footer";
 import "./globals.css";
+import "./styles/access-gate.css";
 import "./styles/footer.css";
 import "./styles/confidence-actions.css";
 import "./styles/forms.css";
 import "./styles/card-preview.css";
+import "./styles/progress-bar.css";
 import "./styles/generate-deck.css";
 import "./styles/generate-deck-loading.css";
 import "./styles/generate-deck-preview.css";
 import "./styles/navigation.css";
 import "./styles/saved-decks.css";
 import "./styles/study-session.css";
+import "./styles/study-session-chrome.css";
 import "./styles/study-session-summary.css";
+import "./styles/study-session-breakdown.css";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-display",

@@ -1,0 +1,45 @@
+.access-screen {
+  min-height: 100%;
+  display: grid;
+  place-items: center;
+  padding: clamp(1.5rem, 5vw, 3rem);
+}
+
+.access-gate-card {
+  width: min(100%, 25rem);
+  display: grid;
+  gap: 1.5rem;
+  background: var(--color-surface);
+  border: var(--border-default);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-soft);
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.access-gate-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.access-gate-title {
+  margin: 0;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--color-charcoal);
+  letter-spacing: -0.01em;
+}
+
+.access-gate-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.access-gate-error {
+  margin: 0;
+  color: #8f4b22;
+  font-size: 0.875rem;
+  font-weight: 500;
+}

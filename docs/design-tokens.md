@@ -1,6 +1,6 @@
 # Design Tokens
 
-This doc captures the design system to copy from the `docs/ui_examples` mocks, trimmed down to the actual MVP.
+This doc captures the design system used for the MVP, trimmed down to the actual screens and interactions we kept.
 
 ## Design Intent
 

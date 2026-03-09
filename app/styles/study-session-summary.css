@@ -1,6 +1,5 @@
 .summary-shell,
-.summary-copy,
-.summary-breakdown-card {
+.summary-copy {
   display: grid;
 }
 
@@ -14,10 +13,7 @@
 .summary-title,
 .summary-description,
 .summary-count-label,
-.summary-count-value,
-.summary-breakdown-title,
-.summary-metric-label,
-.summary-metric-value {
+.summary-count-value {
   margin: 0;
 }
 
@@ -46,8 +42,7 @@
 }
 
 .summary-count-grid,
-.summary-actions,
-.summary-metric-header {
+.summary-actions {
   display: flex;
 }
 
@@ -94,51 +89,6 @@
   font-weight: 700;
 }
 
-.summary-breakdown-card {
-  width: 100%;
-  gap: 1.25rem;
-  border: var(--border-default);
-  border-radius: 2rem;
-  box-shadow: var(--shadow-soft);
-  background: var(--color-surface);
-  padding: 1.5rem;
-}
-
-.summary-breakdown-title {
-  font-size: 1.8rem;
-}
-
-.summary-metric {
-  display: grid;
-  gap: 0.5rem;
-}
-
-.summary-metric-header {
-  justify-content: space-between;
-  gap: 1rem;
-}
-
-.summary-metric-track {
-  width: 100%;
-  height: 0.95rem;
-  border: var(--border-default);
-  border-radius: 999px;
-  background: var(--color-bg);
-  overflow: hidden;
-}
-
-.summary-metric-fill {
-  height: 100%;
-}
-
-.summary-metric-fill-primary {
-  background: var(--color-status-locked);
-}
-
-.summary-metric-fill-secondary {
-  background: var(--color-status-blank);
-}
-
 @media (max-width: 42rem) {
   .summary-shell {
     gap: 1rem;
@@ -170,20 +120,6 @@
 
   .summary-count-value {
     font-size: 2.5rem;
-  }
-
-  .summary-breakdown-card {
-    gap: 0.75rem;
-    padding: 1rem;
-    border-radius: 1.25rem;
-  }
-
-  .summary-breakdown-title {
-    font-size: 1.3rem;
-  }
-
-  .summary-metric-track {
-    height: 0.65rem;
   }
 
   .summary-actions {
