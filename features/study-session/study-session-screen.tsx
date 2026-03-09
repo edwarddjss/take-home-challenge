@@ -6,7 +6,8 @@ import { ProgressBar } from "@/components/ui/progress-bar";
 import { earlyRevealMessage, minimumRevealDelayMs, ratingBeforeRevealMessage } from "@/constants/study-session";
 import { ConfidenceActions } from "@/features/study-session/confidence-actions";
 import { StudySessionCard } from "@/features/study-session/study-session-card";
-import { StudySessionComplete } from "@/features/study-session/study-session-complete";
+import { StudySessionSummary } from "@/features/study-session/study-session-summary";
+import { getSessionSummary } from "@/lib/study-session/get-session-summary";
 import type { GeneratedDeck } from "@/types/ai";
 import type { Confidence, SessionAnswer } from "@/types/session";
 
@@ -15,6 +16,7 @@ type StudySessionScreenProps = {
   getNow?: () => number;
   minimumRevealMs?: number;
   onClose: () => void;
+  onGenerateNewDeck: () => void;
 };
 
 export function StudySessionScreen({
@@ -22,6 +24,7 @@ export function StudySessionScreen({
   getNow = Date.now,
   minimumRevealMs = minimumRevealDelayMs,
   onClose,
+  onGenerateNewDeck,
 }: StudySessionScreenProps) {
   const [answers, setAnswers] = useState<SessionAnswer[]>([]);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
@@ -31,6 +34,7 @@ export function StudySessionScreen({
   const [sessionComplete, setSessionComplete] = useState(false);
   const currentCard = deck.cards[currentCardIndex];
   const currentStep = sessionComplete ? deck.cards.length : Math.min(answers.length + 1, deck.cards.length);
+  const summary = getSessionSummary(answers, deck.cards.length);
   const closeButton = (
     <button aria-label="Close study session" className="study-close-button" onClick={onClose} type="button">
       ×
@@ -88,7 +92,11 @@ export function StudySessionScreen({
           <TopNav rightSlot={closeButton} />
           <section className="study-shell">
             <ProgressBar current={deck.cards.length} label="Current session" total={deck.cards.length} />
-            <StudySessionComplete cardCount={deck.cardCount} onClose={onClose} />
+            <StudySessionSummary
+              onBackToDeck={onClose}
+              onGenerateNewDeck={onGenerateNewDeck}
+              summary={summary}
+            />
           </section>
         </div>
       </main>

@@ -47,6 +47,7 @@ describe("StudySessionScreen", () => {
         getNow={() => now}
         minimumRevealMs={4000}
         onClose={() => {}}
+        onGenerateNewDeck={() => {}}
       />,
     );
 
@@ -77,6 +78,7 @@ describe("StudySessionScreen", () => {
         getNow={() => now}
         minimumRevealMs={4000}
         onClose={() => {}}
+        onGenerateNewDeck={() => {}}
       />,
     );
 
@@ -91,5 +93,32 @@ describe("StudySessionScreen", () => {
       }),
     ).toBeInTheDocument();
     expect(screen.getByText("2/5")).toBeInTheDocument();
+  });
+
+  it("shows the summary screen after the final card is rated", () => {
+    const singleCardDeck: GeneratedDeck = {
+      ...deck,
+      cardCount: 1,
+      cards: [deck.cards[0]],
+    };
+    let now = 0;
+
+    render(
+      <StudySessionScreen
+        deck={singleCardDeck}
+        getNow={() => now}
+        minimumRevealMs={4000}
+        onClose={() => {}}
+        onGenerateNewDeck={() => {}}
+      />,
+    );
+
+    now = 4000;
+    fireEvent.click(screen.getByRole("button", { name: "Reveal answer" }));
+    fireEvent.click(screen.getByRole("button", { name: "Locked" }));
+
+    expect(
+      screen.getByRole("heading", { level: 1, name: "Great session!" }),
+    ).toBeInTheDocument();
   });
 });

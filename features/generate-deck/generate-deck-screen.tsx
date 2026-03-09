@@ -2,16 +2,20 @@
 
 import { useState } from "react";
 import { TopNav } from "@/components/layout/top-nav";
+import {
+  defaultCardCount,
+  defaultDifficulty,
+  minimumLoadingDurationMs,
+} from "@/constants/deck";
 import { GenerateDeckForm } from "@/features/generate-deck/generate-deck-form";
 import { GenerateDeckLoadingScreen } from "@/features/generate-deck/generate-deck-loading-screen";
 import { GenerateDeckPreviewScreen } from "@/features/generate-deck/generate-deck-preview-screen";
 import { StudySessionScreen } from "@/features/study-session/study-session-screen";
+import { isDeckSaved, saveGeneratedDeck, useSavedDecks } from "@/lib/saved-decks-store";
 import type { GenerateDeckErrorResponse, GeneratedDeck } from "@/types/ai";
 import type { CardCount, Difficulty } from "@/types/deck";
 
 type ScreenState = "form" | "loading" | "preview" | "study";
-
-const minimumLoadingDurationMs = 500;
 
 type GenerateDeckScreenProps = {
   minimumLoadingMs?: number;
@@ -43,9 +47,10 @@ export function GenerateDeckScreen({
   minimumLoadingMs = minimumLoadingDurationMs,
   requestDeck = requestGeneratedDeck,
 }: GenerateDeckScreenProps) {
-  const [cardCount, setCardCount] = useState<CardCount>(10);
+  useSavedDecks();
+  const [cardCount, setCardCount] = useState<CardCount>(defaultCardCount);
   const [deck, setDeck] = useState<GeneratedDeck | null>(null);
-  const [difficulty, setDifficulty] = useState<Difficulty>("medium");
+  const [difficulty, setDifficulty] = useState<Difficulty>(defaultDifficulty);
   const [screen, setScreen] = useState<ScreenState>("form");
   const [topic, setTopic] = useState("");
 
@@ -76,16 +81,22 @@ export function GenerateDeckScreen({
     setScreen("preview");
   }
 
+  if (screen === "study" && deck) {
+    return (
+      <StudySessionScreen
+        deck={deck}
+        onClose={returnToPreview}
+        onGenerateNewDeck={returnToEditScreen}
+      />
+    );
+  }
+
   return (
     <main className={`screen-shell screen-shell-${screen}`}>
       <div className="screen-frame">
-        <TopNav rightSlot={screen === "form" ? <span className="top-nav-item">Saved decks</span> : undefined} />
-
-        {screen === "form" ? (
-          <>
-            <header className="hero-block">
-              <h1 className="app-title">Deck</h1>
-            </header>
+        <TopNav />
+        <div className="screen-content">
+          {screen === "form" ? (
             <section className="screen-panel">
               <GenerateDeckForm
                 cardCount={cardCount}
@@ -98,22 +109,20 @@ export function GenerateDeckScreen({
                 topic={topic}
               />
             </section>
-          </>
-        ) : null}
+          ) : null}
 
-        {screen === "loading" ? <GenerateDeckLoadingScreen /> : null}
+          {screen === "loading" ? <GenerateDeckLoadingScreen /> : null}
 
-        {screen === "preview" && deck ? (
+          {screen === "preview" && deck ? (
           <GenerateDeckPreviewScreen
             deck={deck}
+            isSavedDeck={isDeckSaved(deck)}
             onRegenerate={returnToEditScreen}
+            onSaveDeck={() => saveGeneratedDeck(deck)}
             onStartStudying={startStudying}
           />
         ) : null}
-
-        {screen === "study" && deck ? (
-          <StudySessionScreen deck={deck} onClose={returnToPreview} />
-        ) : null}
+        </div>
       </div>
     </main>
   );

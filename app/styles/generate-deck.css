@@ -1,7 +1,7 @@
 .screen-shell {
-  min-height: 100dvh;
-  display: grid;
-  place-items: center;
+  min-height: 100%;
+  width: 100%;
+  display: flex;
   padding: clamp(1rem, 3vw, 2.5rem);
   background: var(--color-bg);
 }
@@ -23,32 +23,28 @@
 }
 
 .screen-frame {
+  flex: 1;
   width: min(100%, 54rem);
+  min-height: 100%;
+  margin-inline: auto;
   display: grid;
+  grid-template-rows: auto 1fr auto;
   gap: clamp(1rem, 2vw, 1.5rem);
 }
 
-.hero-block {
-  display: flex;
-  justify-content: center;
+.screen-content {
+  min-height: 0;
+  display: grid;
+  align-content: start;
+  padding-top: clamp(0.25rem, 1vw, 0.75rem);
 }
 
 .screen-panel {
   width: 100%;
   display: grid;
-  gap: 1.5rem;
   border: var(--border-default);
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-soft);
   background: var(--color-surface);
   padding: clamp(1.25rem, 3vw, 2rem);
-}
-
-.app-title {
-  margin: 0;
-  font-size: clamp(3.5rem, 10vw, 5.75rem);
-  line-height: 0.9;
-  font-weight: 700;
-  text-align: center;
-  text-transform: lowercase;
 }

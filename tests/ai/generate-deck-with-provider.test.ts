@@ -8,7 +8,7 @@ describe("generateDeckWithProvider", () => {
       createMockDeckGenerator(),
     );
 
-    expect(deck.title).toBe("Javascript Closures");
+    expect(deck.title).toBe("Javascript Closures - Medium");
     expect(deck.cards).toHaveLength(5);
     expect(deck.source.provider).toBe("mock");
     expect(deck.cards[0]?.position).toBe(0);
@@ -30,6 +30,7 @@ describe("generateDeckWithProvider", () => {
       }),
     );
 
+    expect(deck.title).toBe("Basic Geography - Easy");
     expect(deck.source.provider).toBe("openai");
     expect(deck.source.model).toBe("gpt-4.1-nano");
   });

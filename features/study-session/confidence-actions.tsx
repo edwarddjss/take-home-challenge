@@ -1,31 +1,6 @@
 import { Button } from "@/components/ui/button";
+import { confidenceOptions } from "@/constants/study-session";
 import type { Confidence } from "@/types/session";
-
-const confidenceOptions = [
-  {
-    confidence: "blank",
-    hint: "Try again soon",
-    icon: "☹",
-    label: "Blank",
-  },
-  {
-    confidence: "wobbly",
-    hint: "Review tomorrow",
-    icon: "◔",
-    label: "Wobbly",
-  },
-  {
-    confidence: "locked",
-    hint: "Mastered",
-    icon: "☺",
-    label: "Locked",
-  },
-] satisfies {
-  confidence: Confidence;
-  hint: string;
-  icon: string;
-  label: string;
-}[];
 
 type ConfidenceActionsProps = {
   answerRevealed: boolean;

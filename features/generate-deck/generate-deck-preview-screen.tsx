@@ -1,26 +1,23 @@
 import { CardListItem } from "@/components/ui/card-list-item";
 import { CardPreviewPanel } from "@/components/ui/card-preview-panel";
 import { Button } from "@/components/ui/button";
+import { previewCardLabels } from "@/constants/deck";
 import { StatusPill } from "@/components/ui/status-pill";
 import type { GeneratedDeck } from "@/types/ai";
 
-const cardLabels = [
-  "Fundamental concept",
-  "Execution context",
-  "Comparison",
-  "Performance",
-  "Best practices",
-];
-
 type GenerateDeckPreviewScreenProps = {
   deck: GeneratedDeck;
-  onRegenerate: () => void;
+  isSavedDeck?: boolean;
+  onRegenerate?: () => void;
+  onSaveDeck?: () => void;
   onStartStudying: () => void;
 };
 
 export function GenerateDeckPreviewScreen({
   deck,
+  isSavedDeck = false,
   onRegenerate,
+  onSaveDeck,
   onStartStudying,
 }: GenerateDeckPreviewScreenProps) {
   return (
@@ -42,12 +39,24 @@ export function GenerateDeckPreviewScreen({
           </span>
           Start studying
         </Button>
-        <Button onClick={onRegenerate} type="button" variant="option">
-          <span aria-hidden="true" className="preview-button-icon">
-            ↻
-          </span>
-          Regenerate deck
-        </Button>
+        {onSaveDeck ? (
+          <Button
+            disabled={isSavedDeck}
+            onClick={onSaveDeck}
+            type="button"
+            variant="option"
+          >
+            {isSavedDeck ? "Saved" : "Save deck"}
+          </Button>
+        ) : null}
+        {onRegenerate ? (
+          <Button onClick={onRegenerate} type="button" variant="option">
+            <span aria-hidden="true" className="preview-button-icon">
+              ↻
+            </span>
+            Regenerate deck
+          </Button>
+        ) : null}
       </div>
 
       <CardPreviewPanel>
@@ -56,16 +65,12 @@ export function GenerateDeckPreviewScreen({
             <CardListItem
               key={`${card.question}-${index}`}
               index={index}
-              label={cardLabels[index] ?? "Study card"}
+              label={previewCardLabels[index] ?? "Study card"}
               question={card.question}
             />
           ))}
         </div>
       </CardPreviewPanel>
-
-      <footer className="preview-footer">
-        <span className="preview-footer-label">Recent cards</span>
-      </footer>
     </section>
   );
 }

@@ -21,7 +21,7 @@ export function normalizeGeneratedDeck(
 
   return {
     topic: input.topic.trim(),
-    title: rawDeck.title?.trim() || toDeckTitle(input.topic),
+    title: toDeckTitle(input.topic, input.difficulty),
     difficulty: input.difficulty,
     cardCount: input.cardCount,
     cards: rawDeck.cards.map((card, position) => ({

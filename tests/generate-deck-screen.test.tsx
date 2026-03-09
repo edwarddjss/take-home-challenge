@@ -1,12 +1,15 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { GenerateDeckScreen } from "@/features/generate-deck/generate-deck-screen";
+import { getSavedDecksSnapshot, resetSavedDecks } from "@/lib/saved-decks-store";
 
 describe("GenerateDeckScreen", () => {
+  beforeEach(() => {
+    resetSavedDecks();
+  });
+
   it("renders the initial form controls", () => {
     render(<GenerateDeckScreen />);
 
-    expect(screen.getByText("Saved decks")).toBeInTheDocument();
-    expect(screen.getByRole("heading", { level: 1, name: "Deck" })).toBeInTheDocument();
     expect(screen.getByLabelText("What do you want to learn?")).toHaveValue("");
     expect(screen.getByRole("button", { name: "Generate deck" })).toBeInTheDocument();
   });
@@ -17,7 +20,7 @@ describe("GenerateDeckScreen", () => {
         minimumLoadingMs={0}
         requestDeck={async () => ({
           topic: "JavaScript Closures",
-          title: "JavaScript Closures",
+          title: "JavaScript Closures - Medium",
           difficulty: "medium",
           cardCount: 5,
           cards: [
@@ -38,18 +41,18 @@ describe("GenerateDeckScreen", () => {
     fireEvent.click(screen.getByRole("button", { name: "Generate deck" }));
 
     expect(screen.getByText("Generating your deck...")).toBeInTheDocument();
-    expect(screen.queryByText("Saved decks")).not.toBeInTheDocument();
 
     await waitFor(() =>
       expect(
-        screen.getByRole("heading", { level: 1, name: "JavaScript Closures" }),
+        screen.getByRole("heading", { level: 1, name: "JavaScript Closures - Medium" }),
       ).toBeInTheDocument(),
     );
 
     expect(screen.getByRole("button", { name: "Start studying" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Save deck" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Regenerate deck" })).toBeInTheDocument();
-    expect(screen.getByText("Recent cards")).toBeInTheDocument();
     expect(screen.getByText("5 cards")).toBeInTheDocument();
+    expect(getSavedDecksSnapshot()).toHaveLength(0);
   });
 
   it("returns to the form with the current values preserved when regenerate deck is pressed", async () => {
@@ -93,11 +96,9 @@ describe("GenerateDeckScreen", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "Regenerate deck" }));
 
-    expect(screen.getByRole("heading", { level: 1, name: "Deck" })).toBeInTheDocument();
     expect(screen.getByLabelText("What do you want to learn?")).toHaveValue("Civil War");
     expect(screen.getByRole("button", { name: "easy" })).toHaveAttribute("data-active", "true");
     expect(screen.getByRole("button", { name: "5" })).toHaveAttribute("data-active", "true");
-    expect(screen.getByText("Saved decks")).toBeInTheDocument();
   });
 
   it("opens the study session from the preview screen", async () => {

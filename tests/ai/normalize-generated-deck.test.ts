@@ -13,7 +13,7 @@ describe("normalizeGeneratedDeck", () => {
       },
     );
 
-    expect(deck.title).toBe("Basic Geography");
+    expect(deck.title).toBe("Basic Geography - Easy");
     expect(deck.cards).toEqual([
       {
         question: "What is the capital of France?",
@@ -33,7 +33,7 @@ describe("normalizeGeneratedDeck", () => {
       normalizeGeneratedDeck(
         { topic: "planets", difficulty: "medium", cardCount: 5 },
         {
-          title: "Planets",
+          title: "Planets - Medium",
           cards: [{ question: "One?", answer: "Yes" }],
           source: { provider: "mock" },
         },

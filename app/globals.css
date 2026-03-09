@@ -8,10 +8,11 @@
   --color-butter: #fdf3a3;
   --color-charcoal: #1a1a1a;
   --color-muted: rgba(26, 26, 26, 0.72);
-  --border-default: 2px solid var(--color-charcoal);
-  --shadow-soft: 3px 3px 0 0 var(--color-charcoal);
-  --radius-card: 1rem;
-  --radius-control: 1rem;
+  --border-default: 1.5px solid rgba(26, 26, 26, 0.92);
+  --border-subtle: 1px solid rgba(26, 26, 26, 0.18);
+  --shadow-soft: 2px 2px 0 0 rgba(26, 26, 26, 0.92);
+  --radius-card: 1.25rem;
+  --radius-control: 1.15rem;
   --radius-pill: 9999px;
 }
 
@@ -28,10 +29,29 @@
 html,
 body {
   margin: 0;
-  min-height: 100vh;
+  min-height: 100dvh;
   background: var(--color-bg);
   color: var(--color-charcoal);
   font-family: var(--font-display), sans-serif;
+}
+
+body {
+  display: block;
+}
+
+.app-root {
+  min-height: 100dvh;
+  display: grid;
+  grid-template-rows: 1fr auto;
+}
+
+.app-main {
+  min-height: 0;
+  display: flex;
+}
+
+.app-main > * {
+  flex: 1;
 }
 
 button,

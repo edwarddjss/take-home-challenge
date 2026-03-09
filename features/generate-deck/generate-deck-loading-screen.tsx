@@ -1,22 +1,18 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
-const studyTips = [
-  "Try to answer before revealing the card.",
-  "Say the answer out loud to improve recall.",
-  "Mark Wobbly if you only partly knew it.",
-  "Short study bursts usually work better.",
-  "Explain why an answer is correct before moving on.",
-];
+import {
+  loadingStudyTips,
+  loadingTipRotationMs,
+} from "@/constants/loading-screen";
 
 export function GenerateDeckLoadingScreen() {
   const [tipIndex, setTipIndex] = useState(0);
 
   useEffect(() => {
     const interval = window.setInterval(() => {
-      setTipIndex((current) => (current + 1) % studyTips.length);
-    }, 2800);
+      setTipIndex((current) => (current + 1) % loadingStudyTips.length);
+    }, loadingTipRotationMs);
 
     return () => window.clearInterval(interval);
   }, []);
@@ -37,7 +33,7 @@ export function GenerateDeckLoadingScreen() {
       <div className="loading-copy">
         <h2 className="loading-title">Generating your deck...</h2>
         <p aria-live="polite" className="loading-tip">
-          Tip: {studyTips[tipIndex]}
+          Tip: {loadingStudyTips[tipIndex]}
         </p>
       </div>
     </section>

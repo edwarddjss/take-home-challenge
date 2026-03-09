@@ -14,7 +14,7 @@ function buildMockCard(
 
 export function createMockDeckGenerator(): DeckGenerator {
   return async function mockDeckGenerator({ input }) {
-    const title = toDeckTitle(input.topic);
+    const title = toDeckTitle(input.topic, input.difficulty);
     const cards = Array.from({ length: input.cardCount }, (_, index) =>
       buildMockCard(title, input.difficulty, index),
     );
