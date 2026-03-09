@@ -1,4 +1,5 @@
 import {
+    deleteSavedDeck,
     getSavedDeckById,
     resetSavedDecks,
     saveGeneratedDeck,
@@ -51,5 +52,25 @@ describe("saved-decks-store localStorage", () => {
         const entry = getSavedDeckById("civics-medium");
         expect(entry).not.toBeNull();
         expect(entry!.deck.topic).toBe("Civics");
+    });
+
+    it("deletes a saved deck by id", () => {
+        saveGeneratedDeck(deck);
+
+        // Verify it exists first
+        let entry = getSavedDeckById("civics-medium");
+        expect(entry).not.toBeNull();
+
+        // Delete it
+        deleteSavedDeck("civics-medium");
+
+        // Verify it was removed from state
+        entry = getSavedDeckById("civics-medium");
+        expect(entry).toBeNull();
+
+        // Verify it was removed from localStorage
+        const raw = localStorage.getItem("deck:saved-decks");
+        const parsed = JSON.parse(raw!) as unknown[];
+        expect(parsed).toHaveLength(0);
     });
 });
