@@ -84,6 +84,15 @@ export function GenerateDeckScreen({
     setScreen("form");
   }
 
+  function startFreshDeck() {
+    setTopic("");
+    setDifficulty(defaultDifficulty);
+    setCardCount(defaultCardCount);
+    setDeck(null);
+    setErrorMessage(null);
+    setScreen("form");
+  }
+
   function startStudying() {
     setScreen("study");
   }
@@ -97,7 +106,8 @@ export function GenerateDeckScreen({
       <StudySessionScreen
         deck={deck}
         onClose={returnToPreview}
-        onGenerateNewDeck={returnToEditScreen}
+        onGenerateNewDeck={startFreshDeck}
+        onGoHome={startFreshDeck}
       />
     );
   }
@@ -105,7 +115,7 @@ export function GenerateDeckScreen({
   return (
     <main className={`screen-shell screen-shell-${screen === "error" ? "form" : screen}`}>
       <div className="screen-frame">
-        <TopNav />
+        <TopNav onBrandClick={screen !== "form" ? startFreshDeck : undefined} />
         <div className="screen-content">
           {screen === "form" ? (
             <section className="screen-panel">

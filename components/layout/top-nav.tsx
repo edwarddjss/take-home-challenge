@@ -1,8 +1,9 @@
-import type { ReactNode } from "react";
+import type { MouseEvent, ReactNode } from "react";
 import Link from "next/link";
 import { appName, savedDecksLabel } from "@/constants/app-shell";
 
 type TopNavProps = {
+  onBrandClick?: () => void;
   rightSlot?: ReactNode;
 };
 
@@ -12,10 +13,17 @@ const savedDecksLink = (
   </Link>
 );
 
-export function TopNav({ rightSlot }: TopNavProps) {
+export function TopNav({ onBrandClick, rightSlot }: TopNavProps) {
+  function handleBrandClick(event: MouseEvent) {
+    if (onBrandClick) {
+      event.preventDefault();
+      onBrandClick();
+    }
+  }
+
   return (
     <header className="top-nav">
-      <Link aria-label="Go to home" className="top-nav-brand" href="/">
+      <Link aria-label="Go to home" className="top-nav-brand" href="/" onClick={handleBrandClick}>
         <span aria-hidden="true" className="top-nav-logo">
           <span className="top-nav-logo-inner" />
         </span>
@@ -28,3 +36,4 @@ export function TopNav({ rightSlot }: TopNavProps) {
     </header>
   );
 }
+

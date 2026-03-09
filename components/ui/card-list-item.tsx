@@ -18,9 +18,6 @@ export function CardListItem({ index, label, question }: CardListItemProps) {
           </p>
         ) : null}
       </div>
-      <span aria-hidden="true" className="card-list-item-chevron">
-        ›
-      </span>
     </article>
   );
 }

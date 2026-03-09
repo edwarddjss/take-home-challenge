@@ -33,7 +33,7 @@
 
 .card-list-item {
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto 1fr;
   align-items: center;
   gap: 1rem;
   border: var(--border-default);
@@ -41,12 +41,6 @@
   box-shadow: var(--shadow-soft);
   background: var(--color-surface);
   padding: 0.9rem 1.2rem;
-  transition: box-shadow 0.12s, transform 0.12s;
-}
-
-.card-list-item:hover {
-  box-shadow: 3px 3px 0 0 rgba(26, 26, 26, 0.92);
-  transform: translate(-0.5px, -0.5px);
 }
 
 .card-list-item-icon {
@@ -89,12 +83,7 @@
 @media (max-width: 42rem) {
   .card-list-item {
     border-radius: 1.75rem;
-    grid-template-columns: auto 1fr;
     padding: 0.85rem 1rem;
-  }
-
-  .card-list-item-chevron {
-    display: none;
   }
 
   .card-list-item-icon {

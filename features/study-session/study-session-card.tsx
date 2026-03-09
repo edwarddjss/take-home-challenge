@@ -4,6 +4,7 @@ type StudySessionCardProps = {
   answer: string;
   answerRevealed: boolean;
   blankRecorded?: boolean;
+  isLastCard?: boolean;
   onAdvance?: () => void;
   onReveal: () => void;
   question: string;
@@ -13,6 +14,7 @@ export function StudySessionCard({
   answer,
   answerRevealed,
   blankRecorded = false,
+  isLastCard = false,
   onAdvance,
   onReveal,
   question,
@@ -34,7 +36,7 @@ export function StudySessionCard({
         {blankRecorded && onAdvance ? (
           <>
             <Button className="study-reveal-button" onClick={onAdvance} type="button">
-              Next card →
+              {isLastCard ? "View results →" : "Next card →"}
             </Button>
             <p className="study-card-face">Answer</p>
           </>

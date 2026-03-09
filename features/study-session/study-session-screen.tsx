@@ -17,6 +17,7 @@ type StudySessionScreenProps = {
   minimumRevealMs?: number;
   onClose: () => void;
   onGenerateNewDeck: () => void;
+  onGoHome?: () => void;
 };
 
 export function StudySessionScreen({
@@ -25,6 +26,7 @@ export function StudySessionScreen({
   minimumRevealMs = minimumRevealDelayMs,
   onClose,
   onGenerateNewDeck,
+  onGoHome,
 }: StudySessionScreenProps) {
   const [answers, setAnswers] = useState<SessionAnswer[]>([]);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
@@ -94,7 +96,7 @@ export function StudySessionScreen({
     return (
       <main className="screen-shell screen-shell-study">
         <div className="screen-frame">
-          <TopNav rightSlot={closeButton} />
+          <TopNav onBrandClick={onGoHome} rightSlot={closeButton} />
           <section className="study-shell">
             <ProgressBar current={deck.cards.length} label="Current session" total={deck.cards.length} />
             <StudySessionSummary
@@ -111,13 +113,14 @@ export function StudySessionScreen({
   return (
     <main className="screen-shell screen-shell-study">
       <div className="screen-frame">
-        <TopNav rightSlot={closeButton} />
+        <TopNav onBrandClick={onGoHome} rightSlot={closeButton} />
         <section className="study-shell">
           <ProgressBar current={currentStep} label="Current session" total={deck.cards.length} />
           <StudySessionCard
             answer={currentCard.answer}
             answerRevealed={answerRevealed}
             blankRecorded={blankRecorded}
+            isLastCard={currentCardIndex === deck.cards.length - 1}
             onAdvance={handleAdvance}
             onReveal={handleReveal}
             question={currentCard.question}
